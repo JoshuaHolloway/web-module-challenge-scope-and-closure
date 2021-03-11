@@ -67,12 +67,15 @@ c. What is the lexical scope of `newRoll`?
   * The variable name sits at the scope of the Execution Context of the function personalDice.
   * The function personalDice sits at the global scope.
 
-## (task) JavaScript Foundations
+## (josh) Stetch:
 
 1. Write a function that would allow you to do this using a closure. (This is another interview question we've seen before - when you're ready for answers, view an explanation here).
+
 var addSix = createBase(6);
+
 addSix(10); // returns 16
-addSix(21); // returns 27
+
+faddSix(21); // returns 27
 
 ```js
 const createBase = (init) => {
