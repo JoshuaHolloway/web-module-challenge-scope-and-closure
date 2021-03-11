@@ -28,18 +28,33 @@ console.log(processFirstItem(['foo','bar'],function(str){return str+str}));
   Study the code for counter1 and counter2, then answer the questions below.
   
   1. What is the difference between counter1 and counter2?
-  
+    *    * counter1 has a variable count that can't be used by anthing outside of counterMaker() or couter(), which lives inside the counterMaker() variable.
+    *    * counterMaker() can be used by creating a reference to it by assigning the return value from counterMaker() to a new variable and then invoking that function to increment count implicitly.
+    *    * For example:
+    *    * const f = conterMaker();
+    *    * f(); // this increments counter by invoking the reference to the function counter.
+    *    * Anywhere outside the counterMaker function you can declare and use another variable named count
+    *      that does not clash with count inside counterMaker.
+    *    * In contrast, conter2 uses a variable named count that can be used anywhere else in the program.
+    * 
+    * 
   2. Which of the two uses a closure? How can you tell?
-  
+    *    * counter1 uses the closer.
+    * 
   3. In what scenario would the counter1 code be preferable? In what scenario would 
-     counter2 be better?  
+     counter2 be better?
+    *    * It is probably prefered to use counter1 in any place where you wanted to use another variable named *      count because it won't clash with that count variable internal to countMaker.
+    *    * This technique allows us to create and maintain multiple versions of counting.
+    *    * counter2 is better if your team is using a more functional programming paradign and want to 
+    *      use mostly "pure" functions - where the function does not change the state internally.  
 */
 
 // counter1 code
 function counterMaker() {
   let count = 0;
   return function counter() {
-   return count++;
+    console.log(`counter1() [before increment]: ${count}`);
+    return count++;
   }
 }
 
@@ -62,8 +77,8 @@ Use the inning function below to do the following:
 NOTE: This will be a callback function for the tasks below
 */
 
-function inning(/*Code Here*/){
-    /*Code Here*/
+function inning(){
+    return Math.round(Math.random() * 2); // [0, 2]
 }
 
 
@@ -81,8 +96,11 @@ Use the finalScore function below to do the following:
 }
 */ 
 
-function finalScore(/*code Here*/){
-  /*Code Here*/
+const finalScore = (points_per_inning, num_innings=9) => {
+    return {
+        "Home": num_innings * points_per_inning(),  // #-innings * (points-for-team-1 / inning) = total-points-for-team-1
+        "Away": num_innings * points_per_inning()   // #-innings * (points-for-team-2 / inning) = total-points-for-team-2
+    };
 }
 
 /* ⚾️⚾️⚾️ Task 4: getInningScore() ⚾️⚾️⚾️
@@ -90,8 +108,11 @@ Use the getInningScore() function below to do the following:
   1. Receive a callback function - you will pass in the inning function from task 2 as your argument 
   2. Return an object with a score for home and a score for away that populates from invoking the inning callback function */
 
-function getInningScore(/*Your Code Here */) {
-  /*Your Code Here */
+function getInningScore(f) {
+  return {
+      "Home": f(),
+      "Away": f() 
+  };
 }
 
 
@@ -136,10 +157,15 @@ Use the scoreboard function below to do the following:
 ]  
   */
 
-function scoreboard(/* CODE HERE */) {
-  /* CODE HERE */
-}
+function scoreboard(getInningScore, inning, num_innings=9) {
+  const score_per_inning = [];
+  for (let i = 1; i <= num_innings; i++)
+    score_per_inning.push(getInningScore(inning, i));
 
+  let running_sum = 0;
+  const cdf = score_per_inning.map((val) => running_sum += val);
+  return {score_per_inning, cdf};
+}
 
 
 
