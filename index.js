@@ -77,7 +77,7 @@ Use the inning function below to do the following:
 NOTE: This will be a callback function for the tasks below
 */
 
-function inning(/*Code Here*/){
+function inning(){
     return Math.round(Math.random() * 2); // [0, 2]
 }
 
@@ -96,8 +96,11 @@ Use the finalScore function below to do the following:
 }
 */ 
 
-function finalScore(/*code Here*/){
-  /*Code Here*/
+const finalScore = (points_per_inning, num_innings=9) => {
+    return {
+        "Home": num_innings * points_per_inning(),  // #-innings * (points-for-team-1 / inning) = total-points-for-team-1
+        "Away": num_innings * points_per_inning()   // #-innings * (points-for-team-2 / inning) = total-points-for-team-2
+    };
 }
 
 /* ⚾️⚾️⚾️ Task 4: getInningScore() ⚾️⚾️⚾️
@@ -105,8 +108,11 @@ Use the getInningScore() function below to do the following:
   1. Receive a callback function - you will pass in the inning function from task 2 as your argument 
   2. Return an object with a score for home and a score for away that populates from invoking the inning callback function */
 
-function getInningScore(/*Your Code Here */) {
-  /*Your Code Here */
+function getInningScore(f) {
+  return {
+      "Home": f(),
+      "Away": f() 
+  };
 }
 
 
@@ -151,10 +157,15 @@ Use the scoreboard function below to do the following:
 ]  
   */
 
-function scoreboard(/* CODE HERE */) {
-  /* CODE HERE */
-}
+function scoreboard(getInningScore, inning, num_innings=9) {
+  const score_per_inning = [];
+  for (let i = 1; i <= num_innings; i++)
+    score_per_inning.push(getInningScore(inning, i));
 
+  let running_sum = 0;
+  const cdf = score_per_inning.map((val) => running_sum += val);
+  return {score_per_inning, cdf};
+}
 
 
 
