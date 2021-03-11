@@ -67,7 +67,32 @@ c. What is the lexical scope of `newRoll`?
   * The variable name sits at the scope of the Execution Context of the function personalDice.
   * The function personalDice sits at the global scope.
 
+## (task) JavaScript Foundations
 
+1. Write a function that would allow you to do this using a closure. (This is another interview question we've seen before - when you're ready for answers, view an explanation here).
+var addSix = createBase(6);
+addSix(10); // returns 16
+addSix(21); // returns 27
+
+const createBase = (init) => {
+    let base = init;
+    return function(num) {
+        // base is the closure
+        // debugger;
+        return base + num;
+    };
+};
+
+var addSix = createBase(6);
+const x1 = addSix(10); // returns 16
+console.log(x1);
+const x2 = addSix(21); // returns 27
+console.log(x2);
+
+
+2. Research the differences between functional programming and object oriented programming. Then, describe the pros and cons of functional programming vs object-oriented programming. This is a common interview question and great practice!
+  -Functional programming is great.
+  -OOP is trash and results in overly complicated codebases.
 
 ## JavaScript Foundations
 
