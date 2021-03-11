@@ -2,6 +2,73 @@
 
 The module challenge is the afternoon project or assignment that students work through independently. This expands on the guided project completed earlier with the instructor.
 
+
+## (Josh) Written Questions:
+1. In your own words, define closure (1-2 sentences).
+  * A closure is when a variable in an inner scope references a variable or set of variables that live in their relative outer scope.
+  * I personally think of scope as being analogous to a made-up extension to mathematical sets/sub-sets.
+    * For example, if you have the sets S={{a,b,c}, x, y, z} and you let T={a,b,c}, then S={T,x,y,z}
+      * In this analogy, the outser scope is the set S and the inner scope is the set T.
+      * If you add the rule that anything in a subset is able to talk to all the elements in its superset
+        then I think this is a good anology for closures.
+      * Here is a mental image I make with this anology to scope and closures:
+
+```
+----------------------------------------------
+|set-S:                                     |
+|      |-------------|                      |
+|      |set-T:       |                      |
+|      |   a, b, c   |,     x,   y,   z     |
+|      |             |                      |
+|      |-------------|                      |
+|--------------------------------------------
+```
+
+      * There is a wall-like container construct around the set-S and the same for set-T, sort of like scope.
+      * In this made-up rule extention to set-theory, anything in a subset can talk to any elements in the superset
+        but elements in the superset cannot talk to elements in the subset - they are aware there is a subset
+        but what is inside the subset is made opaque to the elements in the superset.
+      * To the elements x, y, and z in the superset they simply see another element named T,
+        instead of seeing what is inside of T.
+      * It is like the boundary around the sub-set T is a one-way mirror seeing outward, but not inward.  :)
+      
+
+
+2. Study the following code, then answer the questions below.
+
+```js
+function personalDice(name){
+  return function(){
+      // generate random number between 1 and 6
+    const newRoll = Math.floor(Math.random() * 6);
+    console.log(`${name} rolled a ${newRoll}`);
+  }
+}
+
+const dansRoll = personalDice("Dan");
+
+const zoesRoll = personalDice("Zoe");
+
+
+dansRoll();
+dansRoll();
+```
+
+a. Where is closure used in this code? How can you tell?
+  * The closure is name.
+  * The inside function has to look to its outer scope to find the variable.
+
+b. Compare and contrast calling `dansRoll` the first and second time. What is always the same? What could change?
+  * name is the same
+  * newRoll changes
+
+c. What is the lexical scope of `newRoll`? 
+  * The variable newRoll sits at the scope of the Execution Context of the inner anonomous function.
+  * The variable name sits at the scope of the Execution Context of the function personalDice.
+  * The function personalDice sits at the global scope.
+
+
+
 ## JavaScript Foundations
 
 ## Scope and Closures
