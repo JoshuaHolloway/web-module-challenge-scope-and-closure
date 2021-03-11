@@ -78,7 +78,7 @@ NOTE: This will be a callback function for the tasks below
 */
 
 function inning(/*Code Here*/){
-    /*Code Here*/
+    return Math.round(Math.random() * 2); // [0, 2]
 }
 
 
