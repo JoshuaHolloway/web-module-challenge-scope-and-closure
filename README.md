@@ -96,7 +96,7 @@ console.log(x2);
 
 2. Research the differences between functional programming and object oriented programming. Then, describe the pros and cons of functional programming vs object-oriented programming. This is a common interview question and great practice!
   * Functional programming is great.
-  * OOP is trash and results in overly complicated codebases.
+  * OOP is trash and results in unnecessarily overly complicated codebases.
 
 ## JavaScript Foundations
 
